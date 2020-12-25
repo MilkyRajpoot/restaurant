@@ -75,14 +75,41 @@ def register(request):
         form = SignUpForm()
     return render(request, 'register.html', {'form': form})
 
+@login_required(login_url="/login/")
+def addAtribute(request):
+    form = foodattributeForm(request.POST,request.FILES)
+    template = "create.html"
+    context = {"form": form}
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.save()
+        return HttpResponseRedirect("/")
+    else: 
+        form = foodattributeForm()   
+    return render(request, template, context)
 
-# from django.conf import settings 
-# from django.core.mail import send_mail
-# def home(request):
-# 	form = foodForm(request.POST)
-# 	data = foodCategory.objects.values()
-# 	context = {'data':data,'form':form}
-# 	email_from = settings.EMAIL_HOST_USER 
-# 	recipient_list = ['milkyrajpoot@gmail.com',]
-# 	send_mail('subject', 'body of the message', email_from, recipient_list)
-# 	return render(request, 'home.html',context)
+@login_required(login_url="/login/")
+def addCategory(request):
+    form = foodCategoryForm(request.POST,request.FILES)
+    template = "create.html"
+    context = {"form": form}
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.save()
+        return HttpResponseRedirect("/")
+    else: 
+        form = foodCategoryForm()   
+    return render(request, template, context)
+
+@login_required(login_url="/login/")
+def addFoodItem(request):
+    form = foodForm(request.POST,request.FILES)
+    template = "create.html"
+    context = {"form": form}
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.save()
+        return HttpResponseRedirect("/")
+    else: 
+        form = foodForm()   
+    return render(request, template, context)
