@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block body_block %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+</style>
+</head>
+<body>
+<!-- Trigger/Open The Modal -->
+<div class="container">
+  <div class="jumbotron">
+  	<div style="text-align: center;">
+    <h1>Welcome to the Resturant</h1>
+    <h2><u>Available Food Items</u></h2>
+    <br>
+    <button id="myBtn">(Click here)To Choose Food Category & Attribute</button>
+    <br><br>
+</div>
+<form type="get" action="." style="text-align: center;margin-bottom: 20px">
+    <input  id="search_box" type="text" name="search"  placeholder="Search Food Items..." >
+    <button name="searchData" id="search_submit" type="submit" >Submit</button>
+</form>
+<form type="get" action="." style="text-align: center;margin-bottom: 20px">
+<label>Enter Price Range : </label>
+<input type="text" name="min_price" maxlength="4" size="3" >
+ - <input type="text" name="max_price" maxlength="4" size="3"> 
+<input type="submit" name="price" value="Go">
+</form>
+    <div style="margin: 20px">
+    <label>Choose Food Attribute</label>
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+	    <thead>
+	        <tr>
+	            <th><b>Food-Items</b></th>
+	            <th><b>Food-Price</b></th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        {% for object in foodItem %}
+	        <tr>
+	        	<td>{{ object.item }}</td>
+	        	<td>{{ object.price }}</td>
+	        </tr>
+	        {% endfor %}
+	    </tbody>
+	</table>
+</div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <form method="post">
+  	{% csrf_token %}
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Choose Food Category and Attribute</h2>
+    </div>
+    <div style="margin: 20px">
+    <label>Choose Food Category</label>
+    <select class="form-control" name="category" id="category">  
+        <option value="None">----------</option>  
+        {% for object in category %}
+            <option value="{{ object.category }}">{{ object.category }}</option>
+        {% endfor %}
+    </select></div>
+    <div style="margin: 20px">
+    <label>Choose Food Attribute</label>
+    <select class="form-control" name="attribute" id="attribute">  
+        <option value="None">----------</option>  
+        {% for obj in attribute %}
+            <option value="{{ obj.attribute }}">{{ obj.attribute }}</option>
+        {% endfor %}
+    </select><br>
+    <input type="submit" value="Search" name="search"><br> 
+</div>
+    <br> 
+    <div class="modal-footer">
+      <h2></h2>
+    </div>
+  </div>
+</form>
+
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+</body>
+</html>
+
+{% endblock %}
