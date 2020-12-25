@@ -25,15 +25,22 @@ class foodForm(forms.ModelForm):
 
     class Meta:
         model = foodItem
-        fields = ('item', 'category', 'attribute')
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['category'].queryset = foodCategory.objects.none()
-        self.fields['attribute'].queryset = foodAttribute.objects.none()
+        fields = ('item','price','category', 'attribute')
 
     widgets = {
             'item': forms.Select(attrs={'id':'choicewa'}),
             'attribute': forms.Select(attrs={'id':'choicewa'}),
             'category': forms.Select(attrs={'id':'choicewa'}),
             }
+
+class foodattributeForm(forms.ModelForm):
+
+    class Meta:
+        model = foodAttribute
+        fields = '__all__'
+
+class foodCategoryForm(forms.ModelForm):
+
+    class Meta:
+        model = foodCategory
+        fields = '__all__'
