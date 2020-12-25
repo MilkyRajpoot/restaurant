@@ -1,0 +1,9 @@
+{% block content %}
+  <h2>Create/Add Data</h2>
+  <form method="post">
+    {% csrf_token %}
+    <p style="color: red">{{ form.error }}</p>
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}
