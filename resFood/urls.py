@@ -9,7 +9,10 @@ urlpatterns = [
     url(r'^login/$', auth_views.LoginView.as_view(template_name="login.html"), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name="logout.html"), name='logout'),
     path('register/', views.register, name='register'),
-# Ajax URL'S
+    path('addFoodItem/', views.addFoodItem, name='addFoodItem'),
+    path('addCategory/', views.addCategory, name='addCategory'),
+    path('addAtribute/', views.addAtribute, name='addAtribute'),
+# Ajax URL'S   
     # path('ajax/load-foodData/', views.load_foodData, name='ajax_load_foodData'),
 ]
 
